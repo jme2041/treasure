@@ -1,0 +1,174 @@
+{
+  "version": 9,
+  "$schema": "https://cmake.org/cmake/help/v4.1/_downloads/3e2d73bff478d88a7de0de736ba5e361/schema.json",
+  "configurePresets": [
+    {
+      "name": "windows-base",
+      "description": "Target Windows with the Visual Studio development environment and vcpkg",
+      "hidden": true,
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/out/build/${presetName}",
+      "installDir": "${sourceDir}/out/install/${presetName}",
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Windows"
+      },
+      "vendor": {
+        "microsoft.com/VisualStudioSettings/CMake/1.0": {
+          "hostOS": "Windows"
+        }
+      },
+      "cacheVariables": {
+        "CMAKE_TOOLCHAIN_FILE": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake"
+      }
+    },
+    {
+      "name": "x64",
+      "description": "Target the x86-64 architecture",
+      "inherits": "windows-base",
+      "hidden": true,
+      "architecture": {
+        "value": "x64",
+        "strategy": "external"
+      }
+    },
+    {
+      "name": "x64-MSVC",
+      "description": "Compile with the Visual Studio compiler (cl.exe)",
+      "inherits": "x64",
+      "hidden": true,
+      "cacheVariables": {
+        "CMAKE_C_COMPILER": "cl.exe",
+        "CMAKE_CXX_COMPILER": "cl.exe"
+      },
+      "vendor": {
+        "microsoft.com/VisualStudioSettings/CMake/1.0": {
+          "intelliSenseMode": "windows-msvc-x64"
+        }
+      }
+    },
+    {
+      "name": "x64-Clang",
+      "description": "Compile with Clang (clang-cl.exe)",
+      "inherits": "x64",
+      "hidden": true,
+      "cacheVariables": {
+        "CMAKE_C_COMPILER": "clang-cl.exe",
+        "CMAKE_CXX_COMPILER": "clang-cl.exe"
+      },
+      "vendor": {
+        "microsoft.com/VisualStudioSettings/CMake/1.0": {
+          "intelliSenseMode": "windows-clang-x64"
+        }
+      }
+    },
+    {
+      "name": "Debug",
+      "description": "Debug build",
+      "hidden": true,
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug"
+      }
+    },
+    {
+      "name": "Release",
+      "description": "Release build",
+      "hidden": true,
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release"
+      }
+    },
+    {
+      "name": "Test",
+      "description": "Build tests",
+      "hidden": true,
+      "cacheVariables": {
+        "BUILD_TESTING": {
+          "type": "BOOL",
+          "value": true
+        }
+      }
+    },
+    {
+      "name": "x64-Debug-MSVC",
+      "description": "Debug build with MSVC",
+      "inherits": [
+        "x64-MSVC",
+        "Debug",
+        "Test"
+      ]
+    },
+    {
+      "name": "x64-Release-MSVC",
+      "description": "Release build with MSVC",
+      "inherits": [
+        "x64-MSVC",
+        "Release",
+        "Test"
+      ]
+    },
+    {
+      "name": "x64-Debug-Clang",
+      "description": "Debug build with Clang",
+      "inherits": [
+        "x64-Clang",
+        "Debug",
+        "Test"
+      ]
+    },
+    {
+      "name": "x64-Release-Clang",
+      "description": "Release build with Clang",
+      "inherits": [
+        "x64-Clang",
+        "Release",
+        "Test"
+      ]
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "x64-Debug-MSVC",
+      "description": "Build x64-Debug-MSVC",
+      "configurePreset": "x64-Debug-MSVC"
+    },
+    {
+      "name": "x64-Release-MSVC",
+      "description": "Build x64-Release-MSVC",
+      "configurePreset": "x64-Release-MSVC"
+    },
+    {
+      "name": "x64-Debug-Clang",
+      "description": "Build x64-Debug-Clang",
+      "configurePreset": "x64-Debug-Clang"
+    },
+    {
+      "name": "x64-Release-Clang",
+      "description": "Build x64-Release-Clang",
+      "configurePreset": "x64-Release-Clang"
+    }
+  ],
+  "testPresets": [
+    {
+      "name": "x64-Debug-MSVC",
+      "description": "Test x64-Debug-MSVC",
+      "configurePreset": "x64-Debug-MSVC"
+    },
+    {
+      "name": "x64-Debug-Clang",
+      "description": "Test x64-Debug-Clang",
+      "configurePreset": "x64-Debug-Clang"
+    },
+    {
+      "name": "x64-Release-MSVC",
+      "description": "Test x64-Release-MSVC",
+      "configurePreset": "x64-Release-MSVC"
+    },
+    {
+      "name": "x64-Release-Clang",
+      "description": "Test x64-Release-Clang",
+      "configurePreset": "x64-Release-Clang"
+    }
+  ]
+}

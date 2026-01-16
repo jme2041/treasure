@@ -1,0 +1,8 @@
+{
+  "dependencies": [
+    {
+      "name": "wil",
+      "version>=": "1.0.250325.1"
+    }
+  ]
+}
